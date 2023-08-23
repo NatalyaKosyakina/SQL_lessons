@@ -1,0 +1,17 @@
+Домашняя работа к 4 семинару:
+
+1. Подсчитать общее количество лайков, которые получили пользователи младше 12 лет
+SELECT profiles.user_id, media.id, COUNT(likes.id) FROM profiles 
+LEFT JOIN media ON profiles.user_id = media.user_id
+INNER JOIN likes ON media.id = likes.media_id
+WHERE profiles.birthday >= '2011-08-23'
+GROUP BY media_id;
+
+2. Определить кто больше поставил лайков (всего): мужчины или женщины.
+SELECT gender, COUNT(likes.id) 
+FROM likes LEFT JOIN profiles ON profiles.user_id = likes.user_id
+GROUP BY profiles.gender;
+
+3. Вывести всех пользователей, которые не отправляли сообщения.
+SELECT id, firstname, lastname FROM users
+WHERE id NOT IN (SELECT DISTINCT from_user_id FROM messages);
